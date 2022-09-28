@@ -9,12 +9,6 @@ import {
 } from "react-router-dom";
 import MoviesList from './views/MoviesList/MoviesList';
 
-const dotenv = require('dotenv')
-const dotenvExpand = require('dotenv-expand')
-
-const myEnv = dotenv.config()
-dotenvExpand.expand(myEnv)
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
