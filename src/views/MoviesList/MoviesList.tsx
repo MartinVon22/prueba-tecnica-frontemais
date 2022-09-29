@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Divider } from "@mui/material";
+import { Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Divider, IconButton, Button } from "@mui/material";
 import { getMovies } from '../../core/services/MovieService';
 import Paper from '@mui/material/Paper';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const MoviesList = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState(""); 
+    const [ favouriteMovies, setFavouriteMovies ] = useState<any>([]);
+
+    useEffect(() => {
+        setFavouriteMovies(JSON.parse(localStorage.getItem('favsMovies') || '{}'));
+    }, [])
 
     useEffect(() => {
         searchMovies();
@@ -17,6 +23,16 @@ const MoviesList = () => {
             setMovies(res.data.results)
         });
     }
+
+    useEffect(() => {
+
+        localStorage.setItem('favsMovies', JSON.stringify(favouriteMovies));
+    }, [favouriteMovies])
+
+    const addFavouriteMovie = (movie) => {
+        const updateFavsMovies = [...favouriteMovies, {id: movie.id}]
+        setFavouriteMovies(updateFavsMovies);
+    }   
     return (
         <>
             <Grid container direction="column" alignItems="center" style={{ marginTop: '40px' }}>
@@ -51,6 +67,18 @@ const MoviesList = () => {
                                             </TableCell>
                                             <TableCell align="center">{movie.original_title}</TableCell>
                                             <TableCell align="center">{movie.release_date}</TableCell>
+                                            <TableCell align="center">{movie.release_date}</TableCell>
+                                            <TableCell align="center">
+                                                {favouriteMovies.length > 0 && favouriteMovies.map((fm: any) => {
+                                                    if (fm.id === movie.id) return <StarBorderIcon style={{ cursor: "pointer" }}/>
+                                                })}
+                                                
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Button variant="text" onClick={() => addFavouriteMovie(movie)}> 
+                                                    <StarBorderIcon style={{ cursor: "pointer" }} />
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                         ))}
                                     </TableBody>
