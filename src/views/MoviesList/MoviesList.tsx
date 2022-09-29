@@ -55,7 +55,18 @@ const MoviesList = () => {
                         En este sitio podrás encontrar mucha variedad de Películas entretenidas para ver, busca la que desees y a disfrutar!
                     </Typography>
                     <Divider />
-                    <TextField id="standard-basic" label="Título, Fecha de Estreno" variant="standard" style={{ width: '50%' }} onChange={(e) => setSearchQuery(e.target.value)}/>
+                    <Grid
+                        container
+                        columns={12}
+                    >
+                        <Grid item md={6} >
+                            <TextField id="standard-basic" label="Título, Fecha de Estreno" variant="standard" style={{ width: '100%', marginTop: '20px' }} onChange={(e) => setSearchQuery(e.target.value)}/>
+                        </Grid>
+                        <Grid item md={6} style={{ display: 'flex', justifyContent: "flex-end"}}>
+                            <Button variant="text" startIcon={<StarIcon />}>IR A FAVORITOS</Button>
+                        </Grid>
+                    </Grid>
+                    
                     {movies.length > 0 && (
                         <>
                             <Divider style={{ paddingBottom: '10px' }}/>
