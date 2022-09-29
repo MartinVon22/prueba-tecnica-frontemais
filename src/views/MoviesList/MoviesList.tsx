@@ -3,12 +3,13 @@ import { Grid, TextField, Table, TableBody, TableCell, TableContainer, TableHead
 import { getMovies } from '../../core/services/MovieService';
 import Paper from '@mui/material/Paper';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 
 const MoviesList = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState(""); 
-    const [ favouriteMovies, setFavouriteMovies ] = useState<any>([]);
+    const [ favouriteMovies, setFavouriteMovies ] = useState<any[]>([]);
 
     useEffect(() => {
         setFavouriteMovies(JSON.parse(localStorage.getItem('favsMovies') || '{}'));
@@ -25,14 +26,24 @@ const MoviesList = () => {
     }
 
     useEffect(() => {
-
         localStorage.setItem('favsMovies', JSON.stringify(favouriteMovies));
     }, [favouriteMovies])
 
     const addFavouriteMovie = (movie) => {
-        const updateFavsMovies = [...favouriteMovies, {id: movie.id}]
-        setFavouriteMovies(updateFavsMovies);
-    }   
+        const isMovieAdded = favouriteMovies.find((f) => f.id === movie.id);
+        if (!isMovieAdded) {
+            const updateFavsMovies = [...favouriteMovies, {id: movie.id}]
+            setFavouriteMovies(updateFavsMovies);
+        } else {
+            favouriteMovies.splice(favouriteMovies.findIndex((f) => f.id === movie.id), 1)
+            const updateFavsMovies = [...favouriteMovies]
+            setFavouriteMovies(updateFavsMovies);
+        }
+    }
+    
+    const isFavouriteMovie = (movie_id) => {
+        return favouriteMovies.length > 0 && favouriteMovies.find((f) => f.id === movie_id);
+    }
     return (
         <>
             <Grid container direction="column" alignItems="center" style={{ marginTop: '40px' }}>
@@ -69,14 +80,8 @@ const MoviesList = () => {
                                             <TableCell align="center">{movie.release_date}</TableCell>
                                             <TableCell align="center">{movie.release_date}</TableCell>
                                             <TableCell align="center">
-                                                {favouriteMovies.length > 0 && favouriteMovies.map((fm: any) => {
-                                                    if (fm.id === movie.id) return <StarBorderIcon style={{ cursor: "pointer" }}/>
-                                                })}
-                                                
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                <Button variant="text" onClick={() => addFavouriteMovie(movie)}> 
-                                                    <StarBorderIcon style={{ cursor: "pointer" }} />
+                                                <Button onClick={() => addFavouriteMovie(movie)}>
+                                                    {favouriteMovies.length && isFavouriteMovie(movie.id) ? <StarIcon style={{ cursor: 'pointer' }} /> : <StarBorderIcon style={{ cursor: 'pointer' }} />}
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
