@@ -4,12 +4,14 @@ import { getMovies } from '../../core/services/MovieService';
 import Paper from '@mui/material/Paper';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+import { useNavigate } from 'react-router-dom';
 
 const MoviesList = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState(""); 
     const [ favouriteMovies, setFavouriteMovies ] = useState<any[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setFavouriteMovies(JSON.parse(localStorage.getItem('favsMovies') || '{}'));
@@ -44,6 +46,11 @@ const MoviesList = () => {
     const isFavouriteMovie = (movie_id) => {
         return favouriteMovies.length > 0 && favouriteMovies.find((f) => f.id === movie_id);
     }
+
+    const goToFavourites = () => {
+        return navigate("/favs");
+    }
+
     return (
         <>
             <Grid container direction="column" alignItems="center" style={{ marginTop: '40px' }}>
@@ -63,7 +70,7 @@ const MoviesList = () => {
                             <TextField id="standard-basic" label="Título, Fecha de Estreno" variant="standard" style={{ width: '100%', marginTop: '20px' }} onChange={(e) => setSearchQuery(e.target.value)}/>
                         </Grid>
                         <Grid item md={6} style={{ display: 'flex', justifyContent: "flex-end"}}>
-                            <Button variant="text" startIcon={<StarIcon />}>IR A FAVORITOS</Button>
+                            <Button variant="text" startIcon={<StarIcon />} onClick={() => goToFavourites()}>IR A FAVORITOS</Button>
                         </Grid>
                     </Grid>
                     
