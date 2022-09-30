@@ -1,12 +1,17 @@
-import { Grid, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Divider, IconButton, Button } from "@mui/material";
+import Paper from '@mui/material/Paper';
+import { useCookies } from 'react-cookie';
 
 const FavouriteList = () => {
 
     const [favouriteMovies, setFavouriteMovies] = useState([]);
+    const [ cookies, setCookie, removeCookie ] = useCookies(['favsMovies']); 
 
     useEffect(() => {
-        setFavouriteMovies(JSON.parse(localStorage.getItem('favsMovies') || '{}'));
+        if (cookies.favsMovies) {
+            setFavouriteMovies(cookies.favsMovies);
+        }
     }, [])
 
     return (
@@ -37,22 +42,21 @@ const FavouriteList = () => {
                                             key={movie.original_title}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell component="th" scope="row"><img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} width="100" alt=""/>
+                                            <TableCell component="th" scope="row"><img src={`https://image.tmdb.org/t/p/w200/${movie.poster}`} width="100" alt=""/>
                                             </TableCell>
-                                            <TableCell align="center">{movie.original_title}</TableCell>
+                                            <TableCell align="center">{movie.title}</TableCell>
                                             <TableCell align="center">{movie.release_date}</TableCell>
-                                            <TableCell align="center">{movie.release_date}</TableCell>
-                                            <TableCell align="center">
-                                                <Button onClick={() => addFavouriteMovie(movie)}>
-                                                    {favouriteMovies.length && isFavouriteMovie(movie.id) ? <StarIcon style={{ cursor: 'pointer' }} /> : <StarBorderIcon style={{ cursor: 'pointer' }} />}
-                                                </Button>
-                                            </TableCell>
                                         </TableRow>
                                         ))}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
                         </>
+                    )}
+                    {!favouriteMovies.length && (
+                        <Typography variant="subtitle2" gutterBottom>
+                            Actualmente no hay películas agregadas a favoritos!
+                        </Typography>
                     )}
             </Grid>
         </Grid>
