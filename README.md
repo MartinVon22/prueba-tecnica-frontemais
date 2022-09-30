@@ -1,46 +1,20 @@
-# Getting Started with Create React App
+Para este proyecto se han utilizado dependencias necesarias para su correcto funcionamiento y para tener una funcionalidad dinámica y prolija.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Las dependencias utilizadas son:
 
-## Available Scripts
+- React Cookies // Para almacenar información en Cookies
+- React Router // Para navegar entre rutas y renderizar componentes en las mismas
+- MUI // Librería de Componentes para diseño
+- Moment // Para formatear las fechas en un formato correcto.
 
-In the project directory, you can run:
+En la página de inicio encontraremos texto, un campo para ingresar texto y un botón para ir a favoritos, el campo de texto solo servirá para buscar películas con palabras claves..
+..y el botón para ir a las películas que agregamos como favoritas.
 
-### `npm start`
+Para agregar una película como favorita tenemos un ícono de una estrella sin relleno la cual indica que esa película no está en favoritos, presionando el ícono aparecerá..
+..una estrella con relleno para indicar que ya se agregó como favorita y aparecerá en el listado de favoritos /favs.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Se utilizó Cookies porque la información almacenada en las mismas tienen duración a diferencia del local storage que volviendo hacia atrás en el navegador esta información..
+..se resetea.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Con respecto a la página de detalle la cual era opcional, explico un poco como lo habría hecho: simplemente es un link hacia una nueva ruta la cual enviaría dentro del estado de la ruta..
+..de React un objeto que contenga toda la información de la película seleccionada y luego en la página de detalle capturaría la misma usando el hook useLocation.
