@@ -5,16 +5,20 @@ import Paper from '@mui/material/Paper';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const MoviesList = () => {
 
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState(""); 
     const [ favouriteMovies, setFavouriteMovies ] = useState<any[]>([]);
+    const [ cookies, setCookie, removeCookie ] = useCookies(['favsMovies']); 
     const navigate = useNavigate();
 
     useEffect(() => {
-        setFavouriteMovies(JSON.parse(localStorage.getItem('favsMovies') || '{}'));
+        if (cookies.favsMovies) {
+            setFavouriteMovies(cookies.favsMovies);
+        }
     }, [])
 
     useEffect(() => {
@@ -28,13 +32,13 @@ const MoviesList = () => {
     }
 
     useEffect(() => {
-        localStorage.setItem('favsMovies', JSON.stringify(favouriteMovies));
+        setCookie('favsMovies', favouriteMovies);
     }, [favouriteMovies])
 
     const addFavouriteMovie = (movie) => {
-        const isMovieAdded = favouriteMovies.find((f) => f.id === movie.id);
+        const isMovieAdded = favouriteMovies && favouriteMovies.find((f) => f.id === movie.id);
         if (!isMovieAdded) {
-            const updateFavsMovies = [...favouriteMovies, {id: movie.id}]
+            const updateFavsMovies = [...favouriteMovies, {id: movie.id, title: movie.original_title, release_date: movie.release_date, poster: movie.poster_path}]
             setFavouriteMovies(updateFavsMovies);
         } else {
             favouriteMovies.splice(favouriteMovies.findIndex((f) => f.id === movie.id), 1)
