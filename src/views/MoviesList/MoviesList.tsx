@@ -6,6 +6,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import moment from 'moment';
 
 const MoviesList = () => {
 
@@ -99,8 +100,7 @@ const MoviesList = () => {
                                             <TableCell component="th" scope="row"><img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} width="100" alt=""/>
                                             </TableCell>
                                             <TableCell align="center">{movie.original_title}</TableCell>
-                                            <TableCell align="center">{movie.release_date}</TableCell>
-                                            <TableCell align="center">{movie.release_date}</TableCell>
+                                            <TableCell align="center">{moment(movie.release_date).format('DD-MM-yyyy')}</TableCell>
                                             <TableCell align="center">
                                                 <Button onClick={() => addFavouriteMovie(movie)}>
                                                     {favouriteMovies.length && isFavouriteMovie(movie.id) ? <StarIcon style={{ cursor: 'pointer' }} /> : <StarBorderIcon style={{ cursor: 'pointer' }} />}

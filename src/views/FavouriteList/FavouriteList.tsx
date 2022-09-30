@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Divider, IconButton, Button } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import { useCookies } from 'react-cookie';
+import moment from "moment";
 
 const FavouriteList = () => {
 
@@ -45,7 +46,7 @@ const FavouriteList = () => {
                                             <TableCell component="th" scope="row"><img src={`https://image.tmdb.org/t/p/w200/${movie.poster}`} width="100" alt=""/>
                                             </TableCell>
                                             <TableCell align="center">{movie.title}</TableCell>
-                                            <TableCell align="center">{movie.release_date}</TableCell>
+                                            <TableCell align="center">{moment(movie.release_date).format('DD-MM-yyyy')}</TableCell>
                                         </TableRow>
                                         ))}
                                     </TableBody>
