@@ -5,9 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
 } from "react-router-dom";
 import MoviesList from './views/MoviesList/MoviesList';
+import FavouriteList from './views/FavouriteList/FavouriteList';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +18,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <MoviesList />,
   },
+  {
+    path: "/favs",
+    element: <FavouriteList />
+  }
 ]);
 
 root.render(
